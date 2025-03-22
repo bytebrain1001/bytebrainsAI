@@ -1,0 +1,8 @@
+streamlit
+pandas
+chromadb
+openai>=1.0.0
+huggingface-hub
+requests
+python-dotenv
+plotly 
