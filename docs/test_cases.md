@@ -240,9 +240,3 @@ def test_error_handling():
 2. Use pytest fixtures for reusable test data
 3. Clean up test data after each test
 4. Use separate test database/environment
-
-Would you like me to:
-1. Add more specific test cases?
-2. Provide additional sample test data?
-3. Show how to implement automated testing?
-4. Create mock data generators?
