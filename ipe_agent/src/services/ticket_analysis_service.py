@@ -11,6 +11,8 @@ from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
 import re
+import json
+import os
 
 # Download required NLTK data
 try:
@@ -35,14 +37,46 @@ class TicketAnalysisService:
         )
         self.lemmatizer = WordNetLemmatizer()
         self.stop_words = set(stopwords.words('english'))
+        self._ticket_data = None
         
     def load_sample_data(self) -> pd.DataFrame:
         """
-        Load sample ticket data
+        Load ticket data from the dataset
         Returns:
-            pd.DataFrame: Sample ticket data
+            pd.DataFrame: Ticket data
         """
-        # Create sample data
+        if self._ticket_data is not None:
+            return self._ticket_data
+            
+        try:
+            # Try to load from the data directory
+            data_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'data', 'sample', 'jira_tickets.json')
+            with open(data_path, 'r') as f:
+                tickets = json.load(f)
+                
+            # Convert to DataFrame
+            df = pd.DataFrame(tickets)
+            
+            # Ensure required columns exist
+            required_columns = ['ticket_id', 'title', 'description', 'created_date', 'status', 'priority', 'assignee', 'component']
+            for col in required_columns:
+                if col not in df.columns:
+                    df[col] = None
+                    
+            # Convert date strings to datetime
+            if 'created_date' in df.columns:
+                df['created_date'] = pd.to_datetime(df['created_date'])
+                
+            self._ticket_data = df
+            return df
+            
+        except Exception as e:
+            print(f"Error loading ticket data: {str(e)}")
+            # Fallback to sample data if loading fails
+            return self._generate_sample_data()
+            
+    def _generate_sample_data(self) -> pd.DataFrame:
+        """Generate sample ticket data as fallback"""
         np.random.seed(42)
         n_samples = 1000
         
@@ -61,10 +95,24 @@ class TicketAnalysisService:
             'component': np.random.choice(['Frontend', 'Backend', 'Database', 'Infrastructure'], n_samples),
             'resolution_time': np.random.randint(1, 30, n_samples),
             'severity': np.random.choice(['Critical', 'High', 'Medium', 'Low'], n_samples),
-            'type': np.random.choice(['Bug', 'Feature', 'Task', 'Incident'], n_samples)
+            'type': np.random.choice(['Bug', 'Feature', 'Task', 'Incident'], n_samples),
+            'resolution_comment': [
+                f'Issue resolved by implementing fix {i}. Root cause was identified and addressed.' 
+                if np.random.random() > 0.5 else None 
+                for i in range(n_samples)
+            ],
+            'server_details': [
+                f'Server: server-{np.random.randint(1, 5)}\n'
+                f'Environment: {np.random.choice(["Production", "Staging", "Development"])}\n'
+                f'Region: {np.random.choice(["US-East", "US-West", "EU-Central", "Asia-Pacific"])}'
+                if np.random.random() > 0.3 else None
+                for i in range(n_samples)
+            ]
         }
         
-        return pd.DataFrame(data)
+        df = pd.DataFrame(data)
+        self._ticket_data = df
+        return df
     
     def preprocess_text(self, text: str) -> str:
         """

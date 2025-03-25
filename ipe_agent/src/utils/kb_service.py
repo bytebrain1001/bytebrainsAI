@@ -1,5 +1,9 @@
 from datetime import datetime, timedelta
 from typing import List, Dict, Any
+import json
+import os
+from datasets import load_dataset
+import random
 
 class KBService:
     def __init__(self):
@@ -8,6 +12,9 @@ class KBService:
         self._guides = self._initialize_guides()
         self._stack_overflow = self._initialize_stack_overflow()
         self._documentation = self._initialize_documentation()
+        
+        # Try to load external data
+        self._load_external_data()
 
     def _initialize_articles(self) -> List[Dict[str, Any]]:
         """Initialize sample KB articles"""
@@ -51,6 +58,46 @@ class KBService:
                 """,
                 "tags": ["database", "performance", "optimization"],
                 "last_updated": datetime.now() - timedelta(days=2)
+            },
+            {
+                "id": "KB003",
+                "title": "Network Security Best Practices",
+                "category": "Security",
+                "content": """
+                # Network Security Best Practices
+                
+                ## Firewall Configuration
+                - Implement proper firewall rules
+                - Regular security audits
+                - Monitor network traffic
+                
+                ## Access Control
+                - Implement role-based access
+                - Regular password rotation
+                - Monitor access logs
+                """,
+                "tags": ["security", "network", "firewall"],
+                "last_updated": datetime.now() - timedelta(days=1)
+            },
+            {
+                "id": "KB004",
+                "title": "Application Deployment Guide",
+                "category": "Deployment",
+                "content": """
+                # Application Deployment Guide
+                
+                ## Pre-deployment Checklist
+                - Run automated tests
+                - Check dependencies
+                - Verify configurations
+                
+                ## Deployment Process
+                - Use blue-green deployment
+                - Monitor health checks
+                - Rollback procedures
+                """,
+                "tags": ["deployment", "ci-cd", "automation"],
+                "last_updated": datetime.now() - timedelta(days=3)
             }
         ]
 
@@ -71,6 +118,36 @@ class KBService:
                 "verification": "CPU usage should return to normal levels (<70%)",
                 "tags": ["cpu", "performance", "linux"],
                 "last_updated": datetime.now() - timedelta(days=1)
+            },
+            {
+                "id": "TG002",
+                "title": "Database Connection Issues",
+                "system": "Database Servers",
+                "problem": "Applications unable to connect to database",
+                "steps": [
+                    "Verify database service status",
+                    "Check network connectivity",
+                    "Review firewall rules",
+                    "Validate credentials"
+                ],
+                "verification": "Test database connection using client tools",
+                "tags": ["database", "connectivity", "troubleshooting"],
+                "last_updated": datetime.now() - timedelta(days=2)
+            },
+            {
+                "id": "TG003",
+                "title": "Web Server Performance Issues",
+                "system": "Web Servers",
+                "problem": "Slow response times and high latency",
+                "steps": [
+                    "Check server resources",
+                    "Review application logs",
+                    "Analyze network traffic",
+                    "Optimize configurations"
+                ],
+                "verification": "Response times should be under 200ms",
+                "tags": ["web", "performance", "optimization"],
+                "last_updated": datetime.now() - timedelta(days=3)
             }
         ]
 
@@ -89,6 +166,34 @@ class KBService:
                 "score": 125,
                 "tags": ["postgresql", "performance", "sql"],
                 "timestamp": datetime.now() - timedelta(days=30)
+            },
+            {
+                "id": "SO002",
+                "title": "Best practices for Docker container security",
+                "question": "What are the essential security measures for Docker containers?",
+                "accepted_answer": """
+                1. Use official base images
+                2. Implement least privilege principle
+                3. Regular security scanning
+                4. Keep images updated
+                """,
+                "score": 98,
+                "tags": ["docker", "security", "containers"],
+                "timestamp": datetime.now() - timedelta(days=25)
+            },
+            {
+                "id": "SO003",
+                "title": "Monitoring Kubernetes cluster health",
+                "question": "What metrics should I monitor in my Kubernetes cluster?",
+                "accepted_answer": """
+                1. Node health and resources
+                2. Pod status and metrics
+                3. Service availability
+                4. Network performance
+                """,
+                "score": 156,
+                "tags": ["kubernetes", "monitoring", "devops"],
+                "timestamp": datetime.now() - timedelta(days=20)
             }
         ]
 
@@ -113,8 +218,106 @@ class KBService:
                 - Backup Systems
                 """,
                 "last_updated": datetime.now() - timedelta(days=10)
+            },
+            {
+                "id": "DOC002",
+                "title": "CI/CD Pipeline Documentation",
+                "category": "DevOps",
+                "content": """
+                # CI/CD Pipeline
+                
+                ## Build Process
+                - Source code compilation
+                - Unit testing
+                - Integration testing
+                
+                ## Deployment Process
+                - Environment setup
+                - Configuration management
+                - Release management
+                """,
+                "last_updated": datetime.now() - timedelta(days=8)
+            },
+            {
+                "id": "DOC003",
+                "title": "Security Policies and Procedures",
+                "category": "Security",
+                "content": """
+                # Security Policies
+                
+                ## Access Control
+                - User authentication
+                - Role-based access
+                - Audit logging
+                
+                ## Incident Response
+                - Detection procedures
+                - Response protocols
+                - Recovery steps
+                """,
+                "last_updated": datetime.now() - timedelta(days=5)
             }
         ]
+
+    def _load_external_data(self):
+        """Load additional data from external sources"""
+        try:
+            # Try to load from Hugging Face datasets
+            self._load_from_huggingface()
+        except Exception as e:
+            print(f"Error loading from Hugging Face: {str(e)}")
+            
+        try:
+            # Try to load from local data directory
+            self._load_from_local()
+        except Exception as e:
+            print(f"Error loading from local directory: {str(e)}")
+
+    def _load_from_huggingface(self):
+        """Load data from Hugging Face datasets"""
+        try:
+            # Load Stack Overflow dataset
+            stack_overflow_dataset = load_dataset("stack_overflow")
+            if stack_overflow_dataset:
+                for item in stack_overflow_dataset['train'][:10]:  # Load first 10 items
+                    self._stack_overflow.append({
+                        "id": f"SO-{len(self._stack_overflow) + 1}",
+                        "title": item['title'],
+                        "question": item['body'],
+                        "accepted_answer": item.get('accepted_answer', ''),
+                        "score": item.get('score', 0),
+                        "tags": item.get('tags', []),
+                        "timestamp": datetime.now() - timedelta(days=random.randint(1, 30))
+                    })
+        except Exception as e:
+            print(f"Error loading Stack Overflow data: {str(e)}")
+
+    def _load_from_local(self):
+        """Load data from local data directory"""
+        data_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'data', 'kb')
+        if not os.path.exists(data_dir):
+            return
+
+        # Load articles
+        articles_file = os.path.join(data_dir, 'articles.json')
+        if os.path.exists(articles_file):
+            with open(articles_file, 'r') as f:
+                articles = json.load(f)
+                self._articles.extend(articles)
+
+        # Load guides
+        guides_file = os.path.join(data_dir, 'guides.json')
+        if os.path.exists(guides_file):
+            with open(guides_file, 'r') as f:
+                guides = json.load(f)
+                self._guides.extend(guides)
+
+        # Load documentation
+        docs_file = os.path.join(data_dir, 'documentation.json')
+        if os.path.exists(docs_file):
+            with open(docs_file, 'r') as f:
+                docs = json.load(f)
+                self._documentation.extend(docs)
 
     def search_articles(self, query: str) -> List[Dict[str, Any]]:
         """Search KB articles"""

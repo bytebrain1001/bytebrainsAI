@@ -1,79 +1,9 @@
-# Integrated Platform Environment (IPE) - Test Cases
+# Integrated Platform Environment (IPE) - Agentic AI Test Cases
 ________________________________________
 
-## 1. Authentication Tests
+## 1. Task Creation Tests
 
-### 1.1 Login Functionality
-| Test ID | Description | Test Data | Expected Result |
-|---------|-------------|-----------|-----------------|
-| AUTH-001 | Valid login | username: "admin", password: "admin123" | Login successful, redirected to dashboard |
-| AUTH-002 | Invalid password | username: "admin", password: "wrong" | Error message displayed |
-| AUTH-003 | Empty credentials | username: "", password: "" | Validation error shown |
-| AUTH-004 | Session timeout | Wait for 8 hours | User logged out automatically |
-
-### 1.2 Role-Based Access
-| Test ID | Description | Test Data | Expected Result |
-|---------|-------------|-----------|-----------------|
-| RBAC-001 | Admin access | Role: "admin" | Access to all features |
-| RBAC-002 | Support access | Role: "support" | Limited admin features |
-| RBAC-003 | Viewer access | Role: "viewer" | Read-only access |
-
-## 2. Chat Interface Tests
-
-### 2.1 Basic Chat Functionality
-| Test ID | Description | Test Data | Expected Result |
-|---------|-------------|-----------|-----------------|
-| CHAT-001 | Simple query | Query: "How to check CPU usage?" | Relevant response with steps |
-| CHAT-002 | Complex query | Query: "Troubleshoot high memory usage in PostgreSQL" | Detailed response with context |
-| CHAT-003 | Empty query | Query: "" | Validation message |
-
-### 2.2 Context-Aware Responses
-```python
-# Sample incident context
-test_incident = {
-    "id": "INC001",
-    "title": "High CPU Usage",
-    "description": "Server experiencing sustained CPU usage above 90%",
-    "status": "active",
-    "priority": "high"
-}
-
-# Sample test queries
-test_queries = [
-    "What's causing the high CPU?",
-    "Show related incidents",
-    "Suggest resolution steps"
-]
-```
-
-## 3. Telemetry Dashboard Tests
-
-### 3.1 Metrics Display
-| Test ID | Description | Test Data | Expected Result |
-|---------|-------------|-----------|-----------------|
-| TEL-001 | CPU metrics | System: "web-server-01" | CPU graph displayed |
-| TEL-002 | Memory metrics | System: "app-server-02" | Memory graph displayed |
-| TEL-003 | Time range selection | Range: "Last 24 Hours" | Updated graphs |
-
-### 3.2 Sample Metrics Data
-```python
-test_metrics = {
-    "cpu_usage": [
-        {"timestamp": "2024-03-17T10:00:00", "value": 85.5},
-        {"timestamp": "2024-03-17T10:05:00", "value": 90.2},
-        {"timestamp": "2024-03-17T10:10:00", "value": 87.8}
-    ],
-    "memory_usage": [
-        {"timestamp": "2024-03-17T10:00:00", "value": 75.5},
-        {"timestamp": "2024-03-17T10:05:00", "value": 78.2},
-        {"timestamp": "2024-03-17T10:10:00", "value": 77.8}
-    ]
-}
-```
-
-## 4. Task Creation Tests
-
-### 4.1 Basic Task Creation
+### 1.1 Basic Task Creation
 | Test ID | Description | Test Data | Expected Result |
 |---------|-------------|-----------|-----------------|
 | TASK-001 | Create task with description | Description: "Analyze system logs", Context: {} | Task created with pending status |
@@ -81,7 +11,7 @@ test_metrics = {
 | TASK-003 | Create task with invalid JSON | Description: "Test", Context: "{invalid json}" | Error message displayed |
 | TASK-004 | Create task with empty description | Description: "", Context: {} | Validation error shown |
 
-### 4.2 Task Planning
+### 1.2 Task Planning
 ```python
 # Sample task planning test data
 test_tasks = [
@@ -115,9 +45,9 @@ test_tasks = [
 ]
 ```
 
-## 5. Task Execution Tests
+## 2. Task Execution Tests
 
-### 5.1 Task Execution Flow
+### 2.1 Task Execution Flow
 | Test ID | Description | Test Data | Expected Result |
 |---------|-------------|-----------|-----------------|
 | EXEC-001 | Execute pending task | Task ID: "task_1" | Task status updates to running |
@@ -125,7 +55,7 @@ test_tasks = [
 | EXEC-003 | Execute non-existent task | Task ID: "invalid_id" | Error message displayed |
 | EXEC-004 | Step execution | Step ID: "step_1" | Step status updates to completed |
 
-### 5.2 Sample Execution Data
+### 2.2 Sample Execution Data
 ```python
 test_execution = {
     "task_id": "task_1",
@@ -147,9 +77,9 @@ test_execution = {
 }
 ```
 
-## 6. Task History Tests
+## 3. Task History Tests
 
-### 6.1 History Management
+### 3.1 History Management
 | Test ID | Description | Test Data | Expected Result |
 |---------|-------------|-----------|-----------------|
 | HIST-001 | Archive completed task | Task ID: "task_1" | Task moves to history |
@@ -157,7 +87,7 @@ test_execution = {
 | HIST-003 | Filter history by date | Date range: "Last 7 days" | Filtered history list |
 | HIST-004 | Search history | Query: "CPU analysis" | Matching tasks |
 
-### 6.2 Sample History Data
+### 3.2 Sample History Data
 ```python
 test_history = {
     "completed_tasks": [
@@ -179,9 +109,9 @@ test_history = {
 }
 ```
 
-## 7. Log Analysis Tests
+## 4. Log Analysis Tests
 
-### 7.1 Log Processing
+### 4.1 Log Processing
 | Test ID | Description | Test Data | Expected Result |
 |---------|-------------|-----------|-----------------|
 | LOG-001 | Analyze error logs | Log type: "error" | Error patterns identified |
@@ -189,7 +119,7 @@ test_history = {
 | LOG-003 | Invalid log format | Log: "invalid format" | Error handled |
 | LOG-004 | Empty log file | Log: "" | Warning message |
 
-### 7.2 Sample Log Data
+### 4.2 Sample Log Data
 ```python
 test_logs = {
     "error_logs": [
@@ -211,43 +141,9 @@ test_logs = {
 }
 ```
 
-## 8. Knowledge Base Tests
+## 5. Data Persistence Tests
 
-### 8.1 Search Functionality
-| Test ID | Description | Test Data | Expected Result |
-|---------|-------------|-----------|-----------------|
-| KB-001 | Keyword search | Query: "CPU usage" | Relevant articles |
-| KB-002 | Category filter | Category: "Troubleshooting" | Filtered results |
-| KB-003 | No results | Query: "xyz123" | "No results" message |
-
-### 8.2 Sample KB Articles
-```python
-test_kb_articles = [
-    {
-        "id": "KB001",
-        "title": "CPU Usage Troubleshooting Guide",
-        "content": """
-        # CPU Usage Troubleshooting
-        
-        ## Common Causes
-        1. Resource-intensive processes
-        2. Application memory leaks
-        3. Background services
-        
-        ## Resolution Steps
-        1. Check top processes
-        2. Review application logs
-        3. Monitor system resources
-        """,
-        "category": "Troubleshooting",
-        "tags": ["cpu", "performance", "troubleshooting"]
-    }
-]
-```
-
-## 9. Data Persistence Tests
-
-### 9.1 File Operations
+### 5.1 File Operations
 | Test ID | Description | Test Data | Expected Result |
 |---------|-------------|-----------|-----------------|
 | DATA-001 | Save active tasks | Tasks: [task_1, task_2] | Tasks saved to file |
@@ -255,7 +151,7 @@ test_kb_articles = [
 | DATA-003 | Save task history | History: [task_1, task_2] | History saved to file |
 | DATA-004 | Load task history | File: "task_history.json" | History loaded correctly |
 
-### 9.2 Sample File Data
+### 5.2 Sample File Data
 ```python
 test_files = {
     "active_tasks.json": [
@@ -275,52 +171,325 @@ test_files = {
 }
 ```
 
-## 10. Integration Tests
+## 6. Log Analysis and Insights Tests
 
-### 10.1 Workflow Tests
-| Test ID | Description | Steps | Expected Result |
-|---------|-------------|-------|-----------------|
-| WF-001 | Incident Resolution | 1. View incident<br>2. Check telemetry<br>3. Run health check<br>4. Execute playbook | Incident resolved |
-| WF-002 | Proactive Monitoring | 1. View dashboards<br>2. Identify issues<br>3. Run automation | Issues prevented |
+### 6.1 Log Filtering and Time Range
+| Test ID | Description | Test Data | Expected Result |
+|---------|-------------|-----------|-----------------|
+| LOG-005 | Filter logs by custom date range | Start: "2024-03-20", End: "2024-03-23" | Logs within date range |
+| LOG-006 | Filter logs by application | App: "web_server" | Logs for web_server only |
+| LOG-007 | Filter logs by server | Server: "server-01" | Logs for server-01 only |
+| LOG-008 | Filter logs by log level | Level: "ERROR" | Error logs only |
+| LOG-009 | Filter logs by multiple criteria | App: "web_server", Level: "ERROR", Time: "24h" | Combined filtered logs |
 
-### 10.2 Sample Workflow Data
+### 6.2 Log Visualization
+| Test ID | Description | Test Data | Expected Result |
+|---------|-------------|-----------|-----------------|
+| LOG-010 | Generate log level distribution | Logs: [100 INFO, 20 WARNING, 10 ERROR] | Pie chart with correct proportions |
+| LOG-011 | Generate component distribution | Components: ["api", "auth", "database"] | Bar chart with correct counts |
+| LOG-012 | Generate timeline visualization | Time series data | Scatter plot with correct timestamps |
+| LOG-013 | Update visualizations on filter change | New filter criteria | Updated charts |
+
+### 6.3 Log Statistics
+| Test ID | Description | Test Data | Expected Result |
+|---------|-------------|-----------|-----------------|
+| LOG-014 | Calculate total log count | Logs: [100 entries] | Count: 100 |
+| LOG-015 | Calculate error rate | Total: 100, Errors: 10 | Rate: 10% |
+| LOG-016 | Count unique components | Components: ["api", "auth", "api", "db"] | Count: 3 |
+| LOG-017 | Calculate time range | Start: "2024-03-20", End: "2024-03-23" | Range: "2024-03-20 to 2024-03-23" |
+
+### 6.4 AI Analysis
+| Test ID | Description | Test Data | Expected Result |
+|---------|-------------|-----------|-----------------|
+| LOG-018 | Generate AI insights | Custom prompt | Structured analysis with summary |
+| LOG-019 | Identify key events | Log sequence | Chronological event list |
+| LOG-020 | Detect potential issues | Error patterns | Issue list with severity |
+| LOG-021 | Generate recommendations | Analysis results | Actionable recommendations |
+
+### 6.5 Sample Test Data
 ```python
-test_workflow = {
-    "incident": {
-        "id": "INC002",
-        "title": "Database Performance Issue",
-        "status": "active"
+test_log_analysis = {
+    "logs": [
+        {
+            "timestamp": "2024-03-23T19:00:00",
+            "level": "INFO",
+            "message": "User authentication successful",
+            "server": "server-01",
+            "application": "web_server",
+            "component": "auth",
+            "trace_id": "trace-1234",
+            "user_id": "user-1",
+            "duration_ms": 150,
+            "status_code": 200
+        },
+        {
+            "timestamp": "2024-03-23T19:01:00",
+            "level": "ERROR",
+            "message": "Database connection failed",
+            "server": "server-02",
+            "application": "database",
+            "component": "database",
+            "trace_id": "trace-1235",
+            "user_id": "user-2",
+            "duration_ms": 500,
+            "status_code": 500
+        }
+    ],
+    "filters": {
+        "time_range": {
+            "start": "2024-03-23T00:00:00",
+            "end": "2024-03-23T23:59:59"
+        },
+        "application": "web_server",
+        "server": "server-01",
+        "log_level": "INFO"
     },
-    "telemetry": {
-        "cpu": "45%",
-        "memory": "89%",
-        "disk": "92%"
-    },
-    "actions": [
-        "Run health check",
-        "Execute disk cleanup",
-        "Restart service"
+    "expected_statistics": {
+        "total_logs": 100,
+        "error_rate": 10.5,
+        "unique_components": 5,
+        "time_range": "2024-03-23 to 2024-03-23"
+    }
+}
+```
+
+### 6.6 Sample Test Script
+```python
+import pytest
+from datetime import datetime, timedelta
+from components.log_analyzer import LogAnalyzer
+from services.log_service import LogService
+
+def test_log_filtering():
+    analyzer = LogAnalyzer()
+    service = LogService()
+    
+    # Test custom date range
+    start_time = datetime(2024, 3, 20)
+    end_time = datetime(2024, 3, 23)
+    logs = service.get_logs(
+        application="all",
+        server="all",
+        start_time=start_time,
+        end_time=end_time
+    )
+    assert all(start_time <= log['timestamp'] <= end_time for log in logs)
+    
+    # Test application filter
+    logs = service.get_logs(application="web_server")
+    assert all(log['application'] == "web_server" for log in logs)
+    
+    # Test log level filter
+    logs = service.get_logs(log_level="ERROR")
+    assert all(log['level'] == "ERROR" for log in logs)
+
+def test_log_visualization():
+    analyzer = LogAnalyzer()
+    service = LogService()
+    
+    # Get sample logs
+    logs = service.get_logs()
+    df = pd.DataFrame(logs)
+    
+    # Test log level distribution
+    level_counts = df['level'].value_counts()
+    assert len(level_counts) > 0
+    assert all(level in ['INFO', 'WARNING', 'ERROR', 'DEBUG'] for level in level_counts.index)
+    
+    # Test component distribution
+    component_counts = df['component'].value_counts()
+    assert len(component_counts) > 0
+    assert all(component in ['api', 'auth', 'database', 'cache', 'network'] for component in component_counts.index)
+
+def test_log_statistics():
+    analyzer = LogAnalyzer()
+    service = LogService()
+    
+    # Get sample logs
+    logs = service.get_logs()
+    df = pd.DataFrame(logs)
+    
+    # Test total log count
+    assert len(df) > 0
+    
+    # Test error rate calculation
+    error_rate = (len(df[df['level'] == 'ERROR']) / len(df)) * 100
+    assert 0 <= error_rate <= 100
+    
+    # Test unique components
+    unique_components = df['component'].nunique()
+    assert unique_components > 0
+
+def test_ai_analysis():
+    analyzer = LogAnalyzer()
+    service = LogService()
+    
+    # Get sample logs
+    logs = service.get_logs()
+    
+    # Test AI analysis generation
+    analysis = asyncio.run(
+        analyzer.agent_service.analyze_logs(
+            "Analyze these logs and provide insights",
+            logs
+        )
+    )
+    
+    assert 'summary' in analysis
+    assert 'key_events' in analysis
+    assert 'issues' in analysis
+    assert 'recommendations' in analysis
+```
+
+## 7. Authentication and User Management Tests
+
+### 7.1 User Authentication
+| Test ID | Description | Test Data | Expected Result |
+|---------|-------------|-----------|-----------------|
+| AUTH-001 | Valid user login | Username: "admin", Password: "valid_password" | Login successful, session created |
+| AUTH-002 | Invalid credentials | Username: "admin", Password: "wrong_password" | Login failed, error message |
+| AUTH-003 | Empty credentials | Username: "", Password: "" | Validation error |
+| AUTH-004 | Session timeout | Session duration: 30 minutes | Session expired, redirect to login |
+| AUTH-005 | Remember me functionality | Remember me: true | Extended session duration |
+
+### 7.2 User Management
+| Test ID | Description | Test Data | Expected Result |
+|---------|-------------|-----------|-----------------|
+| AUTH-006 | Create new user | User details: {username, email, role} | User created successfully |
+| AUTH-007 | Update user profile | Updated details: {name, email} | Profile updated |
+| AUTH-008 | Change password | Old: "current", New: "new_password" | Password updated |
+| AUTH-009 | Reset password | Email: "user@example.com" | Reset link sent |
+| AUTH-010 | Delete user account | User ID: "user_123" | Account deleted |
+
+### 7.3 Role-Based Access Control
+| Test ID | Description | Test Data | Expected Result |
+|---------|-------------|-----------|-----------------|
+| AUTH-011 | Admin access | Role: "admin" | Full system access |
+| AUTH-012 | User access | Role: "user" | Limited access |
+| AUTH-013 | Guest access | Role: "guest" | Read-only access |
+| AUTH-014 | Role modification | New role: "analyst" | Access updated |
+| AUTH-015 | Permission check | Resource: "logs", Action: "delete" | Access denied |
+
+### 7.4 Sample Authentication Data
+```python
+test_auth_data = {
+    "users": [
+        {
+            "id": "user_1",
+            "username": "admin",
+            "email": "admin@example.com",
+            "password_hash": "hashed_password_1",
+            "role": "admin",
+            "created_at": "2024-03-23T00:00:00",
+            "last_login": "2024-03-23T19:00:00",
+            "is_active": True,
+            "permissions": ["read", "write", "delete", "manage_users"]
+        },
+        {
+            "id": "user_2",
+            "username": "analyst",
+            "email": "analyst@example.com",
+            "password_hash": "hashed_password_2",
+            "role": "analyst",
+            "created_at": "2024-03-23T01:00:00",
+            "last_login": "2024-03-23T18:00:00",
+            "is_active": True,
+            "permissions": ["read", "write"]
+        }
+    ],
+    "sessions": [
+        {
+            "session_id": "session_1",
+            "user_id": "user_1",
+            "created_at": "2024-03-23T19:00:00",
+            "expires_at": "2024-03-23T19:30:00",
+            "ip_address": "192.168.1.1",
+            "user_agent": "Mozilla/5.0..."
+        }
+    ],
+    "login_attempts": [
+        {
+            "id": "attempt_1",
+            "username": "admin",
+            "timestamp": "2024-03-23T19:00:00",
+            "success": True,
+            "ip_address": "192.168.1.1"
+        }
     ]
 }
 ```
 
-## 11. Performance Tests
+### 7.5 Sample Test Script
+```python
+import pytest
+from datetime import datetime, timedelta
+from services.auth_service import AuthService
+from models.user import User
 
-### 11.1 Load Testing
-| Test ID | Description | Test Data | Expected Result |
-|---------|-------------|-----------|-----------------|
-| PERF-001 | Multiple users | 50 concurrent users | Response < 2s |
-| PERF-002 | Data loading | 1000 incidents | Load time < 3s |
-| PERF-003 | Chat responses | 10 simultaneous chats | Response < 1s |
+def test_user_login():
+    auth_service = AuthService()
+    
+    # Test successful login
+    result = auth_service.login("admin", "valid_password")
+    assert result["success"] == True
+    assert "session_id" in result
+    assert "user" in result
+    
+    # Test invalid credentials
+    result = auth_service.login("admin", "wrong_password")
+    assert result["success"] == False
+    assert "error" in result
 
-## 12. Error Handling Tests
+def test_session_management():
+    auth_service = AuthService()
+    
+    # Create session
+    session = auth_service.create_session("user_1")
+    assert session["user_id"] == "user_1"
+    assert session["expires_at"] > datetime.now()
+    
+    # Test session validation
+    assert auth_service.validate_session(session["session_id"]) == True
+    
+    # Test session expiration
+    expired_session = auth_service.create_session("user_1", duration=timedelta(seconds=1))
+    time.sleep(2)
+    assert auth_service.validate_session(expired_session["session_id"]) == False
 
-### 12.1 Error Scenarios
-| Test ID | Description | Test Data | Expected Result |
-|---------|-------------|-----------|-----------------|
-| ERR-001 | API timeout | Delay: 30s | Timeout message |
-| ERR-002 | Invalid data | Malformed JSON | Error handled |
-| ERR-003 | Network error | Disconnect network | Retry option |
+def test_user_management():
+    auth_service = AuthService()
+    
+    # Create new user
+    user_data = {
+        "username": "new_user",
+        "email": "new@example.com",
+        "role": "user"
+    }
+    user = auth_service.create_user(user_data)
+    assert user["username"] == "new_user"
+    assert user["role"] == "user"
+    
+    # Update user
+    updated_data = {"email": "updated@example.com"}
+    updated_user = auth_service.update_user(user["id"], updated_data)
+    assert updated_user["email"] == "updated@example.com"
+    
+    # Delete user
+    auth_service.delete_user(user["id"])
+    assert auth_service.get_user(user["id"]) is None
+
+def test_permission_check():
+    auth_service = AuthService()
+    
+    # Test admin permissions
+    admin = auth_service.get_user("user_1")
+    assert auth_service.check_permission(admin["id"], "manage_users") == True
+    
+    # Test user permissions
+    user = auth_service.get_user("user_2")
+    assert auth_service.check_permission(user["id"], "manage_users") == False
+    assert auth_service.check_permission(user["id"], "read") == True
+```
 
 ## Test Execution Instructions
 
@@ -341,11 +510,6 @@ python -m pytest tests/
 # Run specific test category
 python -m pytest tests/test_task_creation.py
 python -m pytest tests/test_task_execution.py
-python -m pytest tests/test_task_history.py
-python -m pytest tests/test_log_analysis.py
-python -m pytest tests/test_data_persistence.py
-python -m pytest tests/test_chat.py
-python -m pytest tests/test_telemetry.py
 ```
 
 3. Generate Test Report:
@@ -353,9 +517,8 @@ python -m pytest tests/test_telemetry.py
 python -m pytest tests/ --html=report.html
 ```
 
-## Sample Test Scripts
+## Sample Test Script
 
-### Task Creation Test
 ```python:tests/test_task_creation.py
 import pytest
 from services.agent_service import AgentService
@@ -389,31 +552,6 @@ def test_task_archiving():
     service.archive_task(task["task_id"])
     history = service.get_task_history()
     assert any(t["task_id"] == task["task_id"] for t in history)
-```
-
-### Chat Interface Test
-```python:tests/test_chat_interface.py
-import pytest
-from utils.openai_service import OpenAIService
-from components.chat_interface import ChatInterface
-
-def test_chat_response():
-    chat = ChatInterface()
-    response = chat.get_response("How to check CPU usage?")
-    assert response is not None
-    assert len(response) > 0
-
-def test_context_awareness():
-    chat = ChatInterface()
-    incident = test_incident  # From sample data
-    chat.set_context(incident)
-    response = chat.get_response("What's the current status?")
-    assert incident["status"] in response.lower()
-
-def test_error_handling():
-    chat = ChatInterface()
-    with pytest.raises(Exception):
-        chat.get_response("")  # Empty query should raise error
 ```
 
 ## Test Data Management
