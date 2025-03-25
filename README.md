@@ -9,26 +9,26 @@ Integrated Platform Environment (IPE) - Agentic AI Solution
 - [Challenges We Faced](#challenges-we-faced)
 - [How to Run](#how-to-run)
 - [Tech Stack](#tech-stack)
-- [Documentation](#Documentation)
+- [Documentation](#documentation)
 - [Team](#team)
 ---
 
-## 🎯 Introduction
+## Introduction
 
 ### Overview
 The Integrated Platform Environment (IPE) is a Gen-AI enabled platform designed to enhance support operations within technology organizations. It combines intelligent task automation, log analysis, and knowledge management into a unified solution powered by OpenAI's capabilities.
 
-## 🎥 Demo
+## Demo
 🔗 [Live Demo](#) (if applicable)  
 📹 [Video Demo](#) (if applicable)  
 🖼️ Screenshots:
 
 ![Screenshot 1](link-to-image)
 
-## 💡 Inspiration
+## Inspiration
 Platform support teams face challenges due to the context switch between multiple tools for troubleshooting, running Ansible scripts, and reviewing telemetry and CI data. This random workflow increases resolution time and complexity. The project aims to create an integrated platform that consolidates these tasks, providing a unified interface for faster issue resolution, better visibility into system health, and improved operational efficiency.
 
-## ⚙️ What It Does
+## What It Does
 ### Core Components
 - **AI-Powered Chat Interface**: Contextual support assistance using OpenAI
 - **Real-time Telemetry Dashboard**: System metrics monitoring and visualization
@@ -128,7 +128,7 @@ Platform support teams face challenges due to the context switch between multipl
 
 
 
-## 🛠️ How We Built It
+## How We Built It
 Briefly outline the technologies, frameworks, and tools used in development.
 
 ### Technologies Used
@@ -169,14 +169,13 @@ ipe/
 - API rate limiting
 - Input validation and sanitization
 
-## 🚧 Challenges We Faced
+## Challenges We Faced
 ### Dataset preparation
 One of the main challenge was generating the dataset for the scenarios handled by platform support and integrating various data sources, such as telemetry, CI data, and knowledge base articles, into one platform while keeping the data consistent and up to date. 
 ### Using the LLM to solve the problem
 One challenge we faced while using Open API Turbo 3.5 LLM model to solve this problem was ensuring the accuracy and relevance of the responses generated. Since the platform support environment involves complex and dynamic data from telemetry, CI relationships, and knowledge bases, the LLM sometimes produced incomplete or contextually incorrect suggestions. Fine-tuning the model with domain-specific data and improving prompt engineering were necessary to enhance the model’s performance.
 
-## 🏃 How to Run
-
+## How to Run
 
 ### 🛠️ Installation
 
@@ -315,7 +314,7 @@ The application includes sample data for testing:
 - 🔹 Database: Chroma DB
 - 🔹 LLM Model: OpenAI API Turbo 3.5
 
-## 📚 Documentation
+## Documentation
 
 ### System Integration Documentation (`docs/markdown.md`)
 - Integration points and data flow
@@ -347,7 +346,7 @@ The application includes sample data for testing:
 - Log analysis tests
 - Data persistence tests
 
-## 👥 Team
+## Team
 - **Teammate 1** - Udayaramu Peethani
 - **Teammate 2** - Rajiv Kumar
 - **Teammate 3** - Venkata Aditya Vajapeyajula
