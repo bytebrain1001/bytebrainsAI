@@ -244,9 +244,24 @@ class LogAnalyzer:
         """Render AI-powered insights"""
         st.header("AI-Powered Insights")
         
-        # Get application and server from session state or use defaults
-        application = st.session_state.get('selected_application', 'all')
-        server = st.session_state.get('selected_server', 'all')
+        # Application and server selection
+        col1, col2 = st.columns(2)
+        with col1:
+            applications = ["web_server", "database", "auth_service", "api_gateway", "all"]
+            application = st.selectbox(
+                "Select Application",
+                applications,
+                index=applications.index(st.session_state.get('selected_application', 'all')),
+                key="insights_application"
+            )
+        with col2:
+            servers = ["server-01", "server-02", "server-03", "server-04", "all"]
+            server = st.selectbox(
+                "Select Server",
+                servers,
+                index=servers.index(st.session_state.get('selected_server', 'all')),
+                key="insights_server"
+            )
         
         # Get time range
         time_range = st.selectbox(
@@ -255,14 +270,20 @@ class LogAnalyzer:
             key="insights_time_range"
         )
         
+        # Initialize end_time as datetime
+        end_time = datetime.now()
+        
         if time_range == "Custom Range":
             col1, col2 = st.columns(2)
             with col1:
-                start_time = st.date_input("Start Date")
+                start_date = st.date_input("Start Date")
+                # Convert date to datetime with time set to start of day
+                start_time = datetime.combine(start_date, datetime.min.time())
             with col2:
-                end_time = st.date_input("End Date")
+                end_date = st.date_input("End Date")
+                # Convert date to datetime with time set to end of day
+                end_time = datetime.combine(end_date, datetime.max.time())
         else:
-            end_time = datetime.now()
             if time_range == "Last 24 Hours":
                 start_time = end_time - timedelta(days=1)
             elif time_range == "Last 7 Days":
@@ -272,8 +293,8 @@ class LogAnalyzer:
         
         # Get logs with filters
         logs = self.log_service.get_logs(
-            application=application,
-            server=server,
+            application=application if application != "all" else "all",
+            server=server if server != "all" else "all",
             start_time=start_time,
             end_time=end_time
         )
@@ -282,18 +303,72 @@ class LogAnalyzer:
             st.warning("No logs found for the selected criteria")
             return
         
+        # Convert logs to DataFrame for easier analysis
+        df = pd.DataFrame(logs)
+        
+        # Ensure timestamp is datetime
+        if 'timestamp' in df.columns:
+            df['timestamp'] = pd.to_datetime(df['timestamp'])
+        
         # Display log statistics
-        stats = self.agent_service.get_log_statistics(logs)
-        if 'error' not in stats:
-            col1, col2, col3, col4 = st.columns(4)
-            with col1:
-                st.metric("Total Logs", stats['total_logs'])
-            with col2:
-                st.metric("Error Rate", f"{stats['error_rate']*100:.1f}%")
-            with col3:
-                st.metric("Unique Components", stats['unique_components'])
-            with col4:
-                st.metric("Time Range", f"{stats['time_range']['start']} to {stats['time_range']['end']}")
+        col1, col2, col3, col4 = st.columns(4)
+        with col1:
+            st.metric("Total Logs", len(df))
+        with col2:
+            error_rate = (len(df[df['level'] == 'ERROR']) / len(df)) * 100 if len(df) > 0 else 0
+            st.metric("Error Rate", f"{error_rate:.1f}%")
+        with col3:
+            st.metric("Unique Components", df['component'].nunique())
+        with col4:
+            time_range_str = f"{df['timestamp'].min().strftime('%Y-%m-%d')} to {df['timestamp'].max().strftime('%Y-%m-%d')}"
+            st.metric("Time Range", time_range_str)
+        
+        # Log Level Distribution
+        st.subheader("Log Level Distribution")
+        level_counts = df['level'].value_counts()
+        level_data = pd.DataFrame({
+            'Level': level_counts.index,
+            'Count': level_counts.values
+        })
+        
+        # Create pie chart for log levels
+        fig_levels = px.pie(
+            level_data,
+            values='Count',
+            names='Level',
+            title="Distribution of Log Levels",
+            color='Level',
+            color_discrete_map={
+                'ERROR': 'red',
+                'WARNING': 'orange',
+                'INFO': 'blue',
+                'DEBUG': 'gray'
+            }
+        )
+        st.plotly_chart(fig_levels, use_container_width=True)
+        
+        # Component Distribution
+        st.subheader("Component Distribution")
+        component_counts = df['component'].value_counts()
+        component_data = pd.DataFrame({
+            'Component': component_counts.index,
+            'Count': component_counts.values
+        })
+        
+        # Create bar chart for components
+        fig_components = px.bar(
+            component_data,
+            x='Component',
+            y='Count',
+            title="Log Distribution by Component",
+            color='Component'
+        )
+        fig_components.update_layout(
+            xaxis_title="Component",
+            yaxis_title="Number of Logs",
+            showlegend=False
+        )
+        st.plotly_chart(fig_components, use_container_width=True)
         
         # AI Analysis
         st.subheader("AI Analysis")
@@ -313,6 +388,24 @@ class LogAnalyzer:
                     st.error(f"Error generating analysis: {analysis['error']}")
                 else:
                     st.markdown(analysis['summary'])
+                    
+                    # Display key events
+                    if analysis.get('key_events'):
+                        st.markdown("#### Key Events")
+                        for event in analysis['key_events']:
+                            st.markdown(f"- {event}")
+                    
+                    # Display issues
+                    if analysis.get('issues'):
+                        st.markdown("#### Potential Issues")
+                        for issue in analysis['issues']:
+                            st.markdown(f"- {issue}")
+                    
+                    # Display recommendations
+                    if analysis.get('recommendations'):
+                        st.markdown("#### Recommendations")
+                        for rec in analysis['recommendations']:
+                            st.markdown(f"- {rec}")
                 
     def _get_timedelta(self, time_range: str) -> timedelta:
         """Convert time range string to timedelta"""

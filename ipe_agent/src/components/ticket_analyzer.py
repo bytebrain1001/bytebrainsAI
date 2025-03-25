@@ -4,6 +4,7 @@ import plotly.graph_objects as go
 from services.ticket_analysis_service import TicketAnalysisService
 import pandas as pd
 from typing import Dict, Any
+from datetime import datetime
 
 class TicketAnalyzer:
     def __init__(self):
@@ -17,7 +18,7 @@ class TicketAnalyzer:
         df = self.service.load_sample_data()
         
         # Create tabs for different analysis views
-        tab1, tab2, tab3 = st.tabs(["Overview", "Trend Analysis", "Content Analysis"])
+        tab1, tab2, tab3 = st.tabs(["Overview", "Trend Analysis", "Ticket Analysis"])
         
         with tab1:
             self._render_overview(df)
@@ -26,7 +27,7 @@ class TicketAnalyzer:
             self._render_trend_analysis(df)
             
         with tab3:
-            self._render_content_analysis(df)
+            self._render_ticket_analysis(df)
     
     def _render_overview(self, df: pd.DataFrame):
         """Render overview statistics and insights"""
@@ -114,31 +115,80 @@ class TicketAnalyzer:
         )
         st.plotly_chart(fig)
     
-    def _render_content_analysis(self, df: pd.DataFrame):
-        """Render content analysis results"""
-        st.header("Content Analysis")
+    def _render_ticket_analysis(self, df: pd.DataFrame):
+        """Render detailed ticket analysis"""
+        st.header("Ticket Details")
         
-        # Get content analysis results
-        content_analysis = self.service.analyze_ticket_content(df)
+        # Add filters
+        col1, col2, col3 = st.columns(3)
+        with col1:
+            status_filter = st.multiselect(
+                "Filter by Status",
+                options=df['status'].unique(),
+                default=df['status'].unique()
+            )
+        with col2:
+            priority_filter = st.multiselect(
+                "Filter by Priority",
+                options=df['priority'].unique(),
+                default=df['priority'].unique()
+            )
+        with col3:
+            component_filter = st.multiselect(
+                "Filter by Component",
+                options=df['component'].unique(),
+                default=df['component'].unique()
+            )
         
-        # Display cluster analysis
-        st.subheader("Ticket Clusters")
-        cluster_terms = content_analysis['cluster_terms']
+        # Apply filters
+        filtered_df = df[
+            (df['status'].isin(status_filter)) &
+            (df['priority'].isin(priority_filter)) &
+            (df['component'].isin(component_filter))
+        ]
         
-        for cluster, terms in cluster_terms.items():
-            with st.expander(f"{cluster} - Top Terms"):
-                st.write(", ".join(terms))
+        # Display ticket details in a table
+        st.subheader("Ticket List")
         
-        # Display sample tickets from each cluster
-        st.subheader("Sample Tickets by Cluster")
-        df['cluster'] = content_analysis['clusters']
+        # Format the DataFrame for display
+        display_df = filtered_df.copy()
+        display_df['created_date'] = display_df['created_date'].dt.strftime('%Y-%m-%d %H:%M:%S')
         
-        for cluster in range(5):
-            cluster_tickets = df[df['cluster'] == cluster].head(3)
-            if not cluster_tickets.empty:
-                with st.expander(f"Sample Tickets from Cluster {cluster + 1}"):
-                    for _, ticket in cluster_tickets.iterrows():
-                        st.write(f"**{ticket['title']}**")
-                        st.write(f"Priority: {ticket['priority']}")
-                        st.write(f"Status: {ticket['status']}")
-                        st.write("---") 
+        # Add color coding for priority
+        def get_priority_color(priority):
+            colors = {
+                'Critical': 'red',
+                'High': 'orange',
+                'Medium': 'yellow',
+                'Low': 'green'
+            }
+            return colors.get(priority, 'gray')
+        
+        # Display tickets in expandable sections
+        for _, ticket in display_df.iterrows():
+            with st.expander(f"{ticket['ticket_id']} - {ticket['title']}"):
+                col1, col2, col3 = st.columns(3)
+                with col1:
+                    st.markdown(f"**Status:** {ticket['status']}")
+                    st.markdown(f"**Priority:** <span style='color: {get_priority_color(ticket['priority'])}'>{ticket['priority']}</span>", unsafe_allow_html=True)
+                with col2:
+                    st.markdown(f"**Created:** {ticket['created_date']}")
+                    st.markdown(f"**Component:** {ticket['component']}")
+                with col3:
+                    st.markdown(f"**Assignee:** {ticket['assignee']}")
+                    st.markdown(f"**Resolution Time:** {ticket['resolution_time']} days")
+                
+                st.markdown("**Description:**")
+                st.markdown(ticket['description'])
+                
+                # Add resolution comment if available
+                if 'resolution_comment' in ticket and ticket['resolution_comment']:
+                    st.markdown("**Resolution Comment:**")
+                    st.markdown(ticket['resolution_comment'])
+                
+                # Add server details if available
+                if 'server_details' in ticket and ticket['server_details']:
+                    st.markdown("**Server Details:**")
+                    st.markdown(ticket['server_details'])
+                
+                st.markdown("---") 
