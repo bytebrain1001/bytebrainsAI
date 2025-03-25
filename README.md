@@ -309,7 +309,7 @@ The application includes sample data for testing:
 5. Create a Pull Request
    ```
 
-## 🏗️ Tech Stack
+## Tech Stack
 - 🔹 Frontend: Streamlit Python Library
 - 🔹 Backend: Python 3.10
 - 🔹 Database: Chroma DB
