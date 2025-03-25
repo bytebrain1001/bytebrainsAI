@@ -1,10 +1,34 @@
-# Integrated Platform Environment (IPE) - Agentic AI Solution
+# 🚀 Project Name
+Integrated Platform Environment (IPE) - Agentic AI Solution
+## 📌 Table of Contents
+- [Introduction](#introduction)
+- [Demo](#demo)
+- [Inspiration](#inspiration)
+- [What It Does](#what-it-does)
+- [How We Built It](#how-we-built-it)
+- [Challenges We Faced](#challenges-we-faced)
+- [How to Run](#how-to-run)
+- [Tech Stack](#tech-stack)
+- [Documentation](#Documentation)
+- [Team](#team)
+---
 
-## Overview
+## 🎯 Introduction
+
+### Overview
 The Integrated Platform Environment (IPE) is a Gen-AI enabled platform designed to enhance support operations within technology organizations. It combines intelligent task automation, log analysis, and knowledge management into a unified solution powered by OpenAI's capabilities.
 
-## 🚀 Features
+## 🎥 Demo
+🔗 [Live Demo](#) (if applicable)  
+📹 [Video Demo](#) (if applicable)  
+🖼️ Screenshots:
 
+![Screenshot 1](link-to-image)
+
+## 💡 Inspiration
+Platform support teams face challenges due to the context switch between multiple tools for troubleshooting, running Ansible scripts, and reviewing telemetry and CI data. This random workflow increases resolution time and complexity. The project aims to create an integrated platform that consolidates these tasks, providing a unified interface for faster issue resolution, better visibility into system health, and improved operational efficiency.
+
+## ⚙️ What It Does
 ### Core Components
 - **AI-Powered Chat Interface**: Contextual support assistance using OpenAI
 - **Real-time Telemetry Dashboard**: System metrics monitoring and visualization
@@ -16,6 +40,62 @@ The Integrated Platform Environment (IPE) is a Gen-AI enabled platform designed 
 - **Task History**: Comprehensive tracking of completed tasks and their results
 - **Log Analysis**: AI-powered analysis of system logs and performance metrics
 - **Anomaly Detection**: Automated detection of system anomalies and issues
+
+### Salient Features of Key Components
+#### Chat Interface
+- AI-powered responses using OpenAI
+- Context-aware assistance
+- History tracking
+- Knowledge base integration
+- Real-time conversation management
+- Multi-turn dialogue support
+
+#### Telemetry Dashboard
+- Real-time metrics visualization
+- System health monitoring
+- Configurable alerts
+- Historical data analysis
+- Performance trend tracking
+- Resource utilization monitoring
+
+#### Knowledge Base
+- Vector-based similarity search
+- Document management
+- Category organization
+- Tag-based filtering
+- Content versioning
+- Search history tracking
+
+#### Automation Engine
+- Automated incident response
+- Health check automation
+- Alert management
+- Task scheduling
+- Workflow automation
+- Event-driven actions
+
+#### Task Automation
+- AI-powered task planning
+- Step-by-step execution
+- Status tracking and updates
+- Result collection and storage
+
+#### Log Analysis
+- System log analysis
+- Performance metrics tracking
+- Anomaly detection
+- Insight generation
+- Pattern recognition
+- Root cause analysis
+
+#### Data Storage
+- JSON-based task storage
+- Persistent task history
+- Active task management
+- Execution results tracking
+- Data versioning
+- Backup and recovery
+
 
 ### Technical Features
 - Vector similarity search using ChromaDB
@@ -31,54 +111,33 @@ The Integrated Platform Environment (IPE) is a Gen-AI enabled platform designed 
 - Step-by-step task execution with status tracking
 - Secure API integration
 
-## 📋 Prerequisites
-- Python 3.9+
-- OpenAI API key
-- Streamlit for the web interface
-- Git for version control
+### Task Management
+1. **Creating Tasks**
+   - Go to the "Agent Tasks" tab
+   - Fill in task description and context
+   - Click "Create Task"
 
-## 🛠️ Installation
+2. **Executing Tasks**
+   - View active tasks
+   - Click "Execute Task" for the desired task
+   - Monitor task progress and results
 
-### Manual Installation
-```bash
-# Clone the repository
-git clone https://github.com/your-repo/ipe.git
-cd ipe
+3. **Viewing History**
+   - Access completed tasks in the "Task History" tab
+   - View detailed execution results and timestamps
 
-# Create virtual environment
-python -m venv venv
-source venv/bin/activate  # Linux/Mac
-# or
-.\venv\Scripts\activate  # Windows
 
-# Install dependencies
-pip install -r requirements.txt
 
-# Start the application
-python src/main.py
-```
+## 🛠️ How We Built It
+Briefly outline the technologies, frameworks, and tools used in development.
 
-## ⚙️ Configuration
+### Technologies Used
+Python, Open AI Turbo 3.5 LLM, Streamlit, Git, Chroma DB
 
-### Environment Variables
-```env
-# API Keys
-OPENAI_API_KEY=your-api-key-here
+### Tools Used
+PyCharm CE
 
-# Logging
-LOG_LEVEL=INFO
-LOG_FILE_PATH=./logs/ipe.log
-
-# Server
-PORT=8501
-HOST=0.0.0.0
-
-# Security
-JWT_SECRET_KEY=your-jwt-secret
-JWT_EXPIRATION_HOURS=24
-```
-
-## 🏗️ Project Structure
+#### 🏗️ Project Structure
 ```
 ipe/
 ├── src/
@@ -103,18 +162,66 @@ ipe/
     └── test_cases.md      # Test cases and scenarios
 ```
 
-## 🔒 Security Features
+### 🔒 Security Features
 - JWT-based authentication
 - Role-based access control (ADMIN, SUPPORT, VIEWER)
 - Secure token refresh mechanism
 - API rate limiting
 - Input validation and sanitization
 
-## 💻 Usage
+## 🚧 Challenges We Faced
+### Dataset preparation
+One of the main challenge was generating the dataset for the scenarios handled by platform support and integrating various data sources, such as telemetry, CI data, and knowledge base articles, into one platform while keeping the data consistent and up to date. 
+### Using the LLM to solve the problem
+One challenge we faced while using Open API Turbo 3.5 LLM model to solve this problem was ensuring the accuracy and relevance of the responses generated. Since the platform support environment involves complex and dynamic data from telemetry, CI relationships, and knowledge bases, the LLM sometimes produced incomplete or contextually incorrect suggestions. Fine-tuning the model with domain-specific data and improving prompt engineering were necessary to enhance the model’s performance.
+
+## 🏃 How to Run
+
+
+### 🛠️ Installation
+
+#### Manual Installation
+```bash
+# Clone the repository
+git clone https://github.com/your-repo/ipe.git
+cd ipe
+
+# Create virtual environment
+python -m venv venv
+source venv/bin/activate  # Linux/Mac
+# or
+.\venv\Scripts\activate  # Windows
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Start the application
+python src/main.py
+```
+
+### ⚙️ Configuration
+
+#### Environment Variables
+```env
+# API Keys
+OPENAI_API_KEY=your-api-key-here
+
+# Logging
+LOG_LEVEL=INFO
+LOG_FILE_PATH=./logs/ipe.log
+
+# Server
+PORT=8501
+HOST=0.0.0.0
+
+# Security
+JWT_SECRET_KEY=your-jwt-secret
+JWT_EXPIRATION_HOURS=24
+```
 
 ### Starting the Application
 ```bash
-python src/main.py
+streamlit run src/app.py
 ```
 
 ### Accessing the Interface
@@ -135,78 +242,7 @@ Viewer:
 - Password: viewer123
 ```
 
-### Task Management
-1. **Creating Tasks**
-   - Go to the "Agent Tasks" tab
-   - Fill in task description and context
-   - Click "Create Task"
-
-2. **Executing Tasks**
-   - View active tasks
-   - Click "Execute Task" for the desired task
-   - Monitor task progress and results
-
-3. **Viewing History**
-   - Access completed tasks in the "Task History" tab
-   - View detailed execution results and timestamps
-
-## 🔍 Key Components
-
-### Chat Interface
-- AI-powered responses using OpenAI
-- Context-aware assistance
-- History tracking
-- Knowledge base integration
-- Real-time conversation management
-- Multi-turn dialogue support
-
-### Telemetry Dashboard
-- Real-time metrics visualization
-- System health monitoring
-- Configurable alerts
-- Historical data analysis
-- Performance trend tracking
-- Resource utilization monitoring
-
-### Knowledge Base
-- Vector-based similarity search
-- Document management
-- Category organization
-- Tag-based filtering
-- Content versioning
-- Search history tracking
-
-### Automation Engine
-- Automated incident response
-- Health check automation
-- Alert management
-- Task scheduling
-- Workflow automation
-- Event-driven actions
-
-### Task Automation
-- AI-powered task planning
-- Step-by-step execution
-- Status tracking and updates
-- Result collection and storage
-
-### Log Analysis
-- System log analysis
-- Performance metrics tracking
-- Anomaly detection
-- Insight generation
-- Pattern recognition
-- Root cause analysis
-
-### Data Storage
-- JSON-based task storage
-- Persistent task history
-- Active task management
-- Execution results tracking
-- Data versioning
-- Backup and recovery
-
-## 🧪 Testing
+### 🧪 Testing
 ```bash
 # Run all tests
 pytest
@@ -219,7 +255,7 @@ pytest tests/test_log_analysis.py
 pytest tests/test_data_persistence.py
 ```
 
-## 📊 Sample Data
+### 📊 Sample Data
 The application includes sample data for testing:
 - Task templates and examples
 - Log analysis datasets
@@ -227,9 +263,9 @@ The application includes sample data for testing:
 - Task execution results
 - Historical task data
 
-## 🔧 Troubleshooting
+### 🔧 Troubleshooting
 
-### Common Issues
+#### Common Issues
 1. **Vector DB Connection Issues**
    - Verify ChromaDB is running
    - Check connection settings
@@ -265,12 +301,19 @@ The application includes sample data for testing:
    - Monitor file system health
    - Ensure backup integrity
 
-## 📝 Contributing
+### 📝 Contributing
 1. Fork the repository
 2. Create a feature branch
 3. Commit changes
 4. Push to the branch
 5. Create a Pull Request
+   ```
+
+## 🏗️ Tech Stack
+- 🔹 Frontend: Streamlit Python Library
+- 🔹 Backend: Python 3.10
+- 🔹 Database: Chroma DB
+- 🔹 LLM Model: OpenAI API Turbo 3.5
 
 ## 📚 Documentation
 
@@ -304,3 +347,9 @@ The application includes sample data for testing:
 - Log analysis tests
 - Data persistence tests
 
+## 👥 Team
+- **Teammate 1** - Udayaramu Peethani
+- **Teammate 2** - Rajiv Kumar
+- **Teammate 3** - Venkata Aditya Vajapeyajula
+- **Teammate 4** - Veerendranadh Valeti
+- **Teammate 5** - Satyanarayana Pampana
