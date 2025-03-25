@@ -316,7 +316,7 @@ The application includes sample data for testing:
 
 ## Documentation
 
-### System Integration Documentation (`docs/markdown.md`)
+### System Integration Documentation - [docs/markdown.md](docs/markdown.md)
 - Integration points and data flow
 - API configurations and endpoints
 - Data schemas and formats
@@ -324,7 +324,7 @@ The application includes sample data for testing:
 - Performance considerations
 - Security implementations
 
-### System Architecture (`docs/system_architecture.md`)
+### System Architecture - [docs/system_architecture.md](docs/system_architecture.md)
 - Core components and services
 - Data flow architecture
 - Service layer implementation
@@ -334,7 +334,7 @@ The application includes sample data for testing:
 - Performance optimization
 - OpenAI integration details
 
-### Test Cases (`docs/test_cases.md`)
+### Test Cases - [docs/test_cases.md](docs/test_cases.md)
 - Authentication tests
 - Chat interface tests
 - Telemetry dashboard tests
