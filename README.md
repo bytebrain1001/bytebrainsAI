@@ -182,7 +182,7 @@ ipe/
 ### Dataset preparation
 One of the main challenge was generating the dataset for the scenarios handled by platform support and integrating various data sources, such as telemetry, CI data, and knowledge base articles, into one platform while keeping the data consistent and up to date. 
 ### Using the LLM to solve the problem
-One challenge we faced while using Open API Turbo 3.5 LLM model to solve this problem was ensuring the accuracy and relevance of the responses generated. Since the platform support environment involves complex and dynamic data from telemetry, CI relationships, and knowledge bases, the LLM sometimes produced incomplete or contextually incorrect suggestions. Fine-tuning the model with domain-specific data and improving prompt engineering were necessary to enhance the model’s performance.
+One challenge we faced while using Open API GPT 3.5 Turbo LLM model to solve this problem was ensuring the accuracy and relevance of the responses generated. Since the platform support environment involves complex and dynamic data from telemetry, CI relationships, and knowledge bases, the LLM sometimes produced incomplete or contextually incorrect suggestions. Fine-tuning the model with domain-specific data and improving prompt engineering were necessary to enhance the model’s performance.
 
 ## How to Run
 
@@ -321,7 +321,7 @@ The application includes sample data for testing:
 - 🔹 Frontend: Streamlit Python Library
 - 🔹 Backend: Python 3.10
 - 🔹 Database: Chroma DB
-- 🔹 LLM Model: OpenAI API Turbo 3.5
+- 🔹 LLM Model: OpenAI API GPT 3.5 Turbo
 
 ## Documentation
 
