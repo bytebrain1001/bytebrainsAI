@@ -18,12 +18,9 @@ Integrated Platform Environment (IPE) - Agentic AI Solution
 ### Overview
 The Integrated Platform Environment (IPE) is a Gen-AI enabled platform designed to enhance support operations within technology organizations. It combines intelligent task automation, log analysis, and knowledge management into a unified solution powered by OpenAI's capabilities.
 
-## Demo
-🔗 [Live Demo](#) (if applicable)  
-📹 [Video Demo](#) (if applicable)  
-🖼️ Screenshots:
-
-![Screenshot 1](link-to-image)
+## Demo 
+📹 [Video Demo](artifacts/demo/ByteBrains_AI_IPE_Demo.mp4)  
+🖼️ [Screenshots](artifacts/demo/ByteBrains_AI_IPE_Screenshots.pdf)
 
 ## Inspiration
 Platform support teams face challenges due to the context switch between multiple tools for troubleshooting, running Ansible scripts, and reviewing telemetry and CI data. This random workflow increases resolution time and complexity. The project aims to create an integrated platform that consolidates these tasks, providing a unified interface for faster issue resolution, better visibility into system health, and improved operational efficiency.
@@ -40,7 +37,6 @@ Platform support teams face challenges due to the context switch between multipl
 - **Task History**: Comprehensive tracking of completed tasks and their results
 - **Log Analysis**: AI-powered analysis of system logs and performance metrics
 - **Anomaly Detection**: Automated detection of system anomalies and issues
-- **Recommendation Engine**: Centralized Recommendation Dashboard that empowers platform teams with intelligent, actionable insights
 
 ### Salient Features of Key Components
 #### Chat Interface
@@ -88,14 +84,6 @@ Platform support teams face challenges due to the context switch between multipl
 - Insight generation
 - Pattern recognition
 - Root cause analysis
-
-#### Recommendation Engine
-- High Priority Items
-- Accuracy Score
-- Active Recommendations
-- Incident Trends
-- Recommendation accuracy - F1 score
-
 
 #### Data Storage
 - JSON-based task storage
@@ -148,27 +136,70 @@ PyCharm CE
 
 #### 🏗️ Project Structure
 ```
-ipe/
+code/   
 ├── src/
-│   ├── components/          # UI components
+│   └── app.py             # Application entry point
+│   ├── components/        # UI components
 │   │   ├── automation_panel.py
-│   │   └── task_history_panel.py
-│   ├── services/           # Service implementations
-│   │   ├── agent_service.py
-│   │   └── openai_service.py
-│   ├── utils/             # Utility functions
-│   │   ├── config.py
-│   │   └── logger.py
+│   │   └── chat_interface.py
+│   │   └── cmdb_viewer.py
+│   │   └── incident_manager.py
+│   │   └── knowledge_base.py
+│   │   └── log_analyzer.py
+│   │   └── recommendation_dashboard.py
+│   │   └── sidebar.py
+│   │   └── telemetry_dashboard.py
+│   │   └── ticket_analyzer.py
 │   ├── config/            # Configuration files
-│   └── main.py            # Application entry point
+│   │   └── config.py
+│   │   └── ipe_config.py
+│   ├── scripts/           # To initialize and Load Datsets
+│   │   ├── initialize_vectordb.py
+│   │   └── load_datasets.py
+│   │   └── test_datasets.py    
+│   ├── services/          # Service implementations
+│   │   ├── agent_service.py
+│   │   └── data_service.py
+│   │   └── dataset_loader.py
+│   │   └── ipe_service.py
+│   │   └── log_service.py
+│   │   └── openai_service.py
+│   │   └── recommendation_service.py
+│   │   └── ticket_analysis_service.py
+│   │   └── vector_store.py
+│   ├── utils/             # Utility functions
+│   │   ├── alerts_service.py
+│   │   ├── ansible_service.py
+│   │   ├── auth.py
+│   │   ├── context_engine.py
+│   │   ├── health_check_service.py
+│   │   ├── jwt_auth.py
+│   │   ├── kb_service.py
+│   │   ├── log_service.py
+│   │   ├── openai_service.py
+│   │   ├── sample_data_generator.py
+│   │   ├── session_state.py
+│   │   └── telemetry_service.py
 ├── data/                  # Data storage
-│   ├── active_tasks.json  # Active tasks storage
-│   └── task_history.json  # Task history storage
+│   └── vectordb/          # Vector DB folder
+│   │   └── chroma.sqlite3 # Chroma SQLite DB file
 ├── logs/                  # Application logs
+└── test/                  # Test cases folder
+│   └── test_cases.md      # Test cases and scenarios
+├── task_history.json      # Task history storage
+├── requirements.txt       # Requirements file to install python dependencies
+artifcats/                 # Documentation Artifacts
 └── docs/                  # Documentation
-    ├── markdown.md        # System integration documentation
-    ├── system_architecture.md  # Detailed system architecture
-    └── test_cases.md      # Test cases and scenarios
+│   └── markdown.md        # System integration documentation
+├── arch/
+│   └── system_architecture.md  # Detailed system architecture
+├── demo/    
+│   └── ByteBrain_AI_IPE.pptx                 # PPT of the project
+│   └── ByteBrain_AI_IPE.pdf                  # PDF version of PPT
+│   └── ByteBrains_AI_IPE_Demo.mp4            # Demo Video of the Application
+│   └── ByteBrains_AI_IPE_Screenshots.pdf     # Demo Video of the Application
+├── LICENSE                # License file(Generated)
+└── README.md              # Readme file for the Application
 ```
 
 ### 🔒 Security Features
@@ -182,7 +213,7 @@ ipe/
 ### Dataset preparation
 One of the main challenge was generating the dataset for the scenarios handled by platform support and integrating various data sources, such as telemetry, CI data, and knowledge base articles, into one platform while keeping the data consistent and up to date. 
 ### Using the LLM to solve the problem
-One challenge we faced while using Open API GPT 3.5 Turbo LLM model to solve this problem was ensuring the accuracy and relevance of the responses generated. Since the platform support environment involves complex and dynamic data from telemetry, CI relationships, and knowledge bases, the LLM sometimes produced incomplete or contextually incorrect suggestions. Fine-tuning the model with domain-specific data and improving prompt engineering were necessary to enhance the model’s performance.
+One challenge we faced while using Open API Turbo 3.5 LLM model to solve this problem was ensuring the accuracy and relevance of the responses generated. Since the platform support environment involves complex and dynamic data from telemetry, CI relationships, and knowledge bases, the LLM sometimes produced incomplete or contextually incorrect suggestions. Fine-tuning the model with domain-specific data and improving prompt engineering were necessary to enhance the model’s performance.
 
 ## How to Run
 
@@ -191,8 +222,8 @@ One challenge we faced while using Open API GPT 3.5 Turbo LLM model to solve thi
 #### Manual Installation
 ```bash
 # Clone the repository
-git clone https://github.com/ewfx/gaipl-byte-brains-ai.git
-cd code
+git clone https://github.com/your-repo/ipe.git
+cd ipe
 
 # Create virtual environment
 python -m venv venv
@@ -204,7 +235,7 @@ source venv/bin/activate  # Linux/Mac
 pip install -r requirements.txt
 
 # Start the application
-streamlit run src/app.py
+python src/main.py
 ```
 
 ### ⚙️ Configuration
@@ -319,13 +350,13 @@ The application includes sample data for testing:
 
 ## Tech Stack
 - 🔹 Frontend: Streamlit Python Library
-- 🔹 Backend: Python 3.10
+- 🔹 Backend: Python
 - 🔹 Database: Chroma DB
-- 🔹 LLM Model: OpenAI API GPT 3.5 Turbo
+- 🔹 LLM Model: OpenAI API Turbo 3.5
 
 ## Documentation
 
-### System Integration Documentation - [docs/markdown.md](docs/markdown.md)
+### System Integration Documentation - [artifacts/docs/markdown.md](artifacts/docs/markdown.md)
 - Integration points and data flow
 - API configurations and endpoints
 - Data schemas and formats
@@ -333,7 +364,7 @@ The application includes sample data for testing:
 - Performance considerations
 - Security implementations
 
-### System Architecture - [docs/system_architecture.md](docs/system_architecture.md)
+### System Architecture - [artifacts/arch/system_architecture.md](artifacts/arch/system_architecture.md)
 - Core components and services
 - Data flow architecture
 - Service layer implementation
@@ -343,7 +374,7 @@ The application includes sample data for testing:
 - Performance optimization
 - OpenAI integration details
 
-### Test Cases - [docs/test_cases.md](docs/test_cases.md)
+### Test Cases - [code/test/test_cases.md](code/test/test_cases.md)
 - Authentication tests
 - Chat interface tests
 - Telemetry dashboard tests
