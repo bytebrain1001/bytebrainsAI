@@ -40,6 +40,7 @@ Platform support teams face challenges due to the context switch between multipl
 - **Task History**: Comprehensive tracking of completed tasks and their results
 - **Log Analysis**: AI-powered analysis of system logs and performance metrics
 - **Anomaly Detection**: Automated detection of system anomalies and issues
+- **Recommendation Engine**: Centralized Recommendation Dashboard that empowers platform teams with intelligent, actionable insights
 
 ### Salient Features of Key Components
 #### Chat Interface
@@ -87,6 +88,14 @@ Platform support teams face challenges due to the context switch between multipl
 - Insight generation
 - Pattern recognition
 - Root cause analysis
+
+#### Recommendation Engine
+- High Priority Items
+- Accuracy Score
+- Active Recommendations
+- Incident Trends
+- Recommendation accuracy - F1 score
+
 
 #### Data Storage
 - JSON-based task storage
@@ -182,8 +191,8 @@ One challenge we faced while using Open API Turbo 3.5 LLM model to solve this pr
 #### Manual Installation
 ```bash
 # Clone the repository
-git clone https://github.com/your-repo/ipe.git
-cd ipe
+git clone https://github.com/ewfx/gaipl-byte-brains-ai.git
+cd code
 
 # Create virtual environment
 python -m venv venv
@@ -195,7 +204,7 @@ source venv/bin/activate  # Linux/Mac
 pip install -r requirements.txt
 
 # Start the application
-python src/main.py
+streamlit run src/app.py
 ```
 
 ### ⚙️ Configuration
