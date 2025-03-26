@@ -17,7 +17,8 @@ def render_sidebar() -> str:
             "Automation",
             "Knowledge Base",
             "Log Analysis",
-            "Ticket Analysis"
+            "Ticket Analysis",
+            "Recommendations Engine"
         ]
         
         # Get current page from session state or default to Dashboard
