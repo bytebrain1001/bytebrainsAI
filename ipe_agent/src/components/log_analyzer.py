@@ -109,7 +109,7 @@ class LogAnalyzer:
                 df[[
                     "timestamp", "level", "message", "server",
                     "trace_id", "user_id", "duration_ms", "status_code"
-                ]].sort_values("timestamp", ascending=False)
+                ]].sort_values("timestamp", ascending=False).reset_index(drop=True)
             )
         else:
             st.info("No logs found for the selected criteria")
